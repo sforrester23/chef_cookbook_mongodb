@@ -19,14 +19,14 @@ end
 directory '/data/' do
   owner 'root'
   group 'root'
-  mode '755'
+  mode '0755'
   action :create
 end
 
 directory '/data/db/' do
   owner 'root'
   group 'root'
-  mode '755'
+  mode '0755'
   action :create
 end
 
@@ -49,16 +49,6 @@ package 'mongodb-org' do
   action :install
 end
 
-service 'mongod'
-
-# link '/etc/systemd/system/mongod.conf' do
-#   action :delete
-# end
-#
-# link '/etc/mongod.service' do
-#   action :delete
-# end
-
-# systemd_unit 'mongod' do
-#   action :reload
-# end
+service 'mongod' do
+  action [:enable, :start]
+end
