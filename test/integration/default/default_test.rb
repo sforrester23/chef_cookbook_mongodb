@@ -15,6 +15,10 @@ describe port(80), :skip do
   it { should_not be_listening }
 end
 
+describe port('0.0.0.0', 27017) do
+  it { should be_listening }
+end
+
 describe package "mongodb-org" do
   it { should be_installed }
   its('version') { should match /3\./}
@@ -23,5 +27,9 @@ end
 describe service "mongod" do
   it { should be_installed }
   it { should be_enabled }
-  it { should be_running}
+  it { should be_running }
 end
+
+# describe http('http://localhost', enable_remote_worker: true) do
+#   its('status') { should cmp 200 }
+# end

@@ -30,19 +30,21 @@ end
 #   action :create
 # end
 #
-# template '/etc/mongod.conf' do
-#   source 'mongod.conf.erb'
-#   mode '0755'
-#   owner 'root'
-#   group 'root'
-# end
-#
-# template '/etc/systemd/system/mongod.service' do
-#   source 'mongod.service.erb'
-#   mode '0600'
-#   owner 'root'
-#   group 'root'
-# end
+template '/etc/mongod.conf' do
+  source 'mongod.conf.erb'
+  variables(port_number: node['mongod']['port_number'])
+  notifies :restart, 'service[mongod]'
+  # mode '0755'
+  # owner 'root'
+  # group 'root'
+end
+
+template '/lib/systemd/system/mongod.service' do
+  source 'mongod.service.erb'
+  # mode '0600'
+  # owner 'root'
+  # group 'root'
+end
 
 package 'mongodb-org' do
   options '--allow-unauthenticated'
