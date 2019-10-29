@@ -24,6 +24,13 @@ describe 'mongo::default' do
       expect(chef_run).to install_package 'mongodb-org'
     end
 
+    it 'should enable mongod' do
+      expect(chef_run).to enable_service 'mongod'
+    end
+
+    it 'should start mongod' do
+      expect(chef_run).to start_service 'mongod'
+    end
 
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
